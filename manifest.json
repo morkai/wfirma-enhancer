@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+  "name": "wfirma.pl Enhancer",
+  "version": "0.0.0",
+  "description": "Enhances your wfirma.pl experience.",
+  "homepage_url": "https://github.com/morkai/wfirma-enhancer",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png"
+  },
+  "permissions": [
+    "https://wfirma.pl/*"
+  ],
+  "background": {
+    "scripts": ["bg.js"],
+    "persistent": false
+  },
+  "content_scripts": [{
+    "matches": ["https://wfirma.pl/*"],
+    "css": ["enhancer.css"],
+    "js": ["enhancer.js"]
+  }],
+  "options_page": "options.html",
+	"web_accessible_resources": [
+		"app_logo.png"
+	]
+}
