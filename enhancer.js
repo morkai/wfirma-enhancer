@@ -37,6 +37,10 @@ function enhance(options, first)
 	{
 		e.preventDefault();
 
+		e.dataTransfer = {
+			files: e.originalEvent.dataTransfer.files
+		};
+
 		if (!e.dataTransfer.files.length)
 		{
 			return;
@@ -76,10 +80,6 @@ function enhance(options, first)
 
 		$documentsLink.click();
 		$uiContext.trigger('mouseout');
-
-		e.dataTransfer = {
-			files: e.originalEvent.dataTransfer.files
-		};
 
 		waitForDialogBox('.dialogbox[data-params*="Dokumenty"]', function($docList)
 		{
