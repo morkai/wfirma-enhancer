@@ -37,13 +37,17 @@ function enhance(options, first)
 	{
 		e.preventDefault();
 
+    console.log("[wfirma-enhancer] possible file drop...");
+
 		e.dataTransfer = {
 			files: e.originalEvent.dataTransfer.files
 		};
 
 		if (!e.dataTransfer.files.length)
 		{
-			return;
+      console.log("[wfirma-enhancer] ...nope, no files!");
+
+      return;
 		}
 
 		var checkableEl = e.target;
@@ -55,7 +59,9 @@ function enhance(options, first)
 
 		if (!checkableEl)
 		{
-			return;
+      console.log("[wfirma-enhancer] ...nope, wrong target: not checkable!");
+
+      return;
 		}
 
 		checkableEl.dispatchEvent(new CustomEvent('contextmenu', {
@@ -68,14 +74,18 @@ function enhance(options, first)
 
 		if (!$uiContext.length)
 		{
-			return;
+      console.log("[wfirma-enhancer] ...nope, wrong target: no context menu!");
+
+      return;
 		}
 
 		var $documentsLink = $uiContext.find('.dialogboxlink[href^="/documents"]');
 
 		if (!$documentsLink)
 		{
-			return;
+      console.log("[wfirma-enhancer] ...nope, wrong target: no documents link!");
+
+      return;
 		}
 
 		$documentsLink.click();
@@ -104,20 +114,26 @@ function enhance(options, first)
 		{
 			if (time > 5000)
 			{
-				return;
+        console.log("[wfirma-enhancer] dialog box not found: %s", selector);
+
+        return;
 			}
 
 			var $dialogBox = $(selector);
 
 			if ($dialogBox.length)
 			{
-				return done($dialogBox);
+        console.log("[wfirma-enhancer] dialog box found: %s", selector);
+
+        return done($dialogBox);
 			}
+
+      console.log("[wfirma-enhancer] waiting for dialog box: %s", selector);
 
 			setTimeout(wait, interval, interval, time + interval);
 		}
 
-		wait(50, 0);
+		wait(200, 0);
 	}
 
 	function waitAndSubmit($form)
@@ -126,20 +142,26 @@ function enhance(options, first)
 		{
 			if (time > 60000 || !$form.closest('body').length)
 			{
-				return;
+        console.log("[wfirma-enhancer] submit button not found!");
+
+        return;
 			}
 
-			var $submit = $form.find('[type="submit"]');
+			var $submit = $form.find('.btn-primary[type="submit"]');
 
 			if ($submit.length && $submit.prop('disabled') === false)
 			{
-				return $submit.click();
+        console.log("[wfirma-enhancer] submitting!");
+
+        return $submit.click();
 			}
+
+      console.log("[wfirma-enhancer] waiting for the submit button to become enabled:", $submit);
 
 			setTimeout(wait, interval, interval, time + interval);
 		}
 
-		wait(100, 0);
+		wait(200, 0);
 	}
 }
 
